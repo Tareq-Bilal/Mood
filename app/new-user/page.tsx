@@ -29,7 +29,7 @@ const createNewUser = async () => {
 };
 const NewUserPage = async () => {
   await createNewUser();
-  return <div>Loading...</div>;
+  return <div>New User Page</div>;
 };
 
 export default NewUserPage;

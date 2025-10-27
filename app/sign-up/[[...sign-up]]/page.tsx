@@ -4,7 +4,7 @@ import React from "react";
 const SignUpPage = () => {
   return (
     <div className="flex items-center justify-center">
-      <SignUp afterSignUpUrl={"/new-user"} />
+      <SignUp afterSignOutUrl={"/new-user"} />
     </div>
   );
 };

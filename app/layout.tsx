@@ -1,4 +1,4 @@
-import { type Metadata } from 'next'
+import { type Metadata } from "next";
 import {
   ClerkProvider,
   SignInButton,
@@ -6,31 +6,31 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
-} from '@clerk/nextjs'
-import { Geist, Geist_Mono } from 'next/font/google'
-import './globals.css'
+} from "@clerk/nextjs";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 
 const Inter = Geist({
-  subsets: ['latin'],
-  variable: '--font-geist-sans',
-  display: 'swap',
-})
+  subsets: ["latin"],
+  variable: "--font-geist-sans",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: 'Mood',
-  description: '',
-}
+  title: "Mood",
+  description: "",
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <ClerkProvider>
       <html lang="en">
         <body className={`${Inter.variable} antialiased`}>
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
+          <header className="flex bg-zinc-900 justify-end items-center p-4 gap-4 h-16">
             <SignedOut>
               <SignInButton />
               <SignUpButton>
@@ -47,5 +47,5 @@ export default function RootLayout({
         </body>
       </html>
     </ClerkProvider>
-  )
+  );
 }
