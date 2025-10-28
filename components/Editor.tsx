@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { updateJournalEntry } from "@/utils/api";
 import { Spinner } from "./ui/spinner";
+import { CircleCheck } from "lucide-react";
 
 const Editor = ({ entry }) => {
   const [entryContent, setEntryContent] = useState(entry.content);
@@ -33,7 +34,7 @@ const Editor = ({ entry }) => {
       } finally {
         setIsSaving(false);
       }
-    }, 1000); // 1 second debounce
+    }, 200); // 1 second debounce
 
     // Cleanup function
     return () => {
@@ -44,10 +45,10 @@ const Editor = ({ entry }) => {
   }, [entryContent, entry.id, entry.content]);
 
   return (
-    <div className="w-full h-full mr-160 px-4">
+    <div className="w-full h-full  mr-260 px-4">
       {/* Save Status Indicator */}
-      <div className="mb-0 ml-3 flex items-center justify-between">
-        <div className="text-sm text-gray-400 mb-0">
+      <div className="pt-4 ml-3 flex items-center justify-between">
+        <div className="text-sm text-gray-400 ">
           {isSaving && (
             <span className="flex items-center gap-2">
               <Spinner className="text-indigo-500" />
@@ -55,7 +56,8 @@ const Editor = ({ entry }) => {
           )}
           {!isSaving && lastSaved && (
             <span className="text-[#A8EB12]">
-              ✓ Saved at {lastSaved.toLocaleTimeString()}
+              <CircleCheck className="inline-block size-4 mb-0.5" /> Saved at{" "}
+              {lastSaved.toLocaleTimeString()}
             </span>
           )}
         </div>
@@ -63,11 +65,8 @@ const Editor = ({ entry }) => {
 
       <textarea
         className="
-        w-full h-[80vh] text-white
-         bg-transparent p-4 outline-none resize-none transition-colors
-         scrollbar scrollbar-thumb-indigo-500 scrollbar-track-transparent 
-         scrollbar-thin hover:scrollbar-thumb-indigo-400
-         "
+         w-full h-[80vh] text-white
+         bg-transparent p-4 outline-none resize-none transition-colors"
         value={entryContent}
         onChange={(e) => setEntryContent(e.target.value)}
         placeholder="Write about your day..."

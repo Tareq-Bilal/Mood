@@ -15,7 +15,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <li className="hover:text-indigo-500 cursor-pointer">Settings</li>
         </ul>
       </div>
-      <div className="pt-8 ml-34 mr-4 h-full overflow-auto">{children}</div>
+      <div className="ml-34 h-full w-full overflow-auto">{children}</div>
     </div>
   );
 };
