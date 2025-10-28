@@ -118,3 +118,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(99, 102, 241); /* indigo-500 */
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(129, 140, 248); /* indigo-400 */
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgb(79, 70, 229); /* indigo-600 */
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: rgb(99, 102, 241) transparent;
+  scrollbar-width: thin;
+}

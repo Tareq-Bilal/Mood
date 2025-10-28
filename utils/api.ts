@@ -19,3 +19,20 @@ export const createNewEntry = async () => {
   const entry = await response.json();
   return entry.entry;
 };
+
+export const updateJournalEntry = async (id: string, content: string) => {
+  const response = await fetch(new Request(createURL(`/api/journal/${id}`)), {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ content }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update journal entry");
+  }
+
+  const updatedEntry = await response.json();
+  return updatedEntry.updatedEntry;
+};

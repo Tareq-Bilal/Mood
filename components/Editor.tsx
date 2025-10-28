@@ -1,7 +1,79 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
+import { updateJournalEntry } from "@/utils/api";
+import { Spinner } from "./ui/spinner";
+
 const Editor = ({ entry }) => {
-  return <div className="ml-10 pt-8">{entry.content}</div>;
+  const [entryContent, setEntryContent] = useState(entry.content);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSaved, setLastSaved] = useState<Date | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Autosave effect
+  useEffect(() => {
+    // Clear existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Don't save if content hasn't changed
+    if (entryContent === entry.content) {
+      return;
+    }
+
+    // Set a new timeout to save after 1 second of no typing
+    timeoutRef.current = setTimeout(async () => {
+      try {
+        setIsSaving(true);
+        await updateJournalEntry(entry.id, entryContent);
+        setLastSaved(new Date());
+      } catch (error) {
+        console.error("Failed to save:", error);
+      } finally {
+        setIsSaving(false);
+      }
+    }, 1000); // 1 second debounce
+
+    // Cleanup function
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [entryContent, entry.id, entry.content]);
+
+  return (
+    <div className="w-full h-full mr-160 px-4">
+      {/* Save Status Indicator */}
+      <div className="mb-0 ml-3 flex items-center justify-between">
+        <div className="text-sm text-gray-400 mb-0">
+          {isSaving && (
+            <span className="flex items-center gap-2">
+              <Spinner className="text-indigo-500" />
+            </span>
+          )}
+          {!isSaving && lastSaved && (
+            <span className="text-[#A8EB12]">
+              ✓ Saved at {lastSaved.toLocaleTimeString()}
+            </span>
+          )}
+        </div>
+      </div>
+
+      <textarea
+        className="
+        w-full h-[80vh] text-white
+         bg-transparent p-4 outline-none resize-none transition-colors
+         scrollbar scrollbar-thumb-indigo-500 scrollbar-track-transparent 
+         scrollbar-thin hover:scrollbar-thumb-indigo-400
+         "
+        value={entryContent}
+        onChange={(e) => setEntryContent(e.target.value)}
+        placeholder="Write about your day..."
+      />
+    </div>
+  );
 };
 
 export default Editor;
