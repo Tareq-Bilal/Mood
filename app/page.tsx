@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -20,8 +19,7 @@ export default function Home() {
              px-4 py-2
            text-white
             hover:bg-indigo-600
-            cursor-pointer
-            "
+            cursor-pointer"
         >
           <Link href="/journal">Get Started</Link>
         </button>

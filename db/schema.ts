@@ -1,7 +1,7 @@
 import { datetime } from "drizzle-orm/mysql-core";
 import { pgTable, uuid, varchar, timestamp, text } from "drizzle-orm/pg-core";
 
-export const usersTable = pgTable("users", {
+export const users = pgTable("users", {
   id: uuid("id")
     .defaultRandom() // generates a random UUID automatically
     .primaryKey(),
