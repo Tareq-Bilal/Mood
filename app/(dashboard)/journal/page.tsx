@@ -1,7 +1,6 @@
-import { JournalEntries } from "@/db/schema";
+import { JournalEntries, JournalAnalysis } from "@/db/schema";
 import { getUserByClerkId } from "@/utils/auth";
 import { db } from "@/utils/db";
-import Analyze from "@/utils/ai";
 import { eq } from "drizzle-orm/sql/expressions/conditions";
 import JournalEntry from "@/components/journal/journal-entry";
 import NewJournal from "@/components/journal/new-journal";
@@ -19,8 +18,32 @@ const getUserEntries = async () => {
   return entries;
 };
 
+const getJournalMood = async (entryId: string) => {
+  const [analysis] = await db
+    .select({
+      mood: JournalAnalysis.mood,
+      color: JournalAnalysis.color,
+    })
+    .from(JournalAnalysis)
+    .where(eq(JournalAnalysis.entryId, entryId))
+    .limit(1);
+
+  return analysis || null;
+};
+
 const JournalPage = async () => {
   const entries = await getUserEntries();
+
+  // Fetch mood data for all entries
+  const entriesWithMoods = await Promise.all(
+    entries.map(async (entry) => {
+      const moodData = await getJournalMood(entry.id);
+      return {
+        ...entry,
+        moodData,
+      };
+    })
+  );
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center sm:px-2 md:px-5 lg:px-15 xl:px-47">
@@ -36,14 +59,14 @@ const JournalPage = async () => {
 
       {/* Grid Container - Centered */}
       <div className="w-full max-w-7xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 mb-4 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {/* New Entry Card */}
           <Link href="/journal/new">
             <NewJournal />
           </Link>
 
           {/* Journal Entries */}
-          {entries.map((entry) => (
+          {entriesWithMoods.map((entry) => (
             <Link key={entry.id} href={`/journal/${entry.id}`}>
               <JournalEntry journalEntry={entry} />
             </Link>

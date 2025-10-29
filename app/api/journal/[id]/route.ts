@@ -25,7 +25,8 @@ export const PATCH = async (
     const body = await req.json();
     const { content } = body;
 
-    if (!content) {
+    // Content can be empty string, but must be provided
+    if (content === undefined || content === null) {
       return NextResponse.json(
         { error: "Content is required." },
         { status: 400 }

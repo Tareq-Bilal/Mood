@@ -14,8 +14,7 @@ export const POST = async (request: Request) => {
       );
     }
 
-    let content =
-      "The morning sun paints the wall gold. A gentle breeze whispers through the open window. Today holds the promise of a quiet, new adventure."; // Default content for new entries
+    let content = ""; // Empty content for new entries
 
     // Check if request has a body
     const contentType = request.headers.get("content-type");
@@ -26,7 +25,7 @@ export const POST = async (request: Request) => {
           content = body.content;
         }
       } catch {
-        // If JSON parsing fails, use default content
+        // If JSON parsing fails, use empty content
       }
     }
 

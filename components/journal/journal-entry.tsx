@@ -1,6 +1,5 @@
 import React from "react";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "lucide-react";
 import { truncateContent } from "@/lib/utils";
 const JournalEntry = ({ journalEntry }) => {
   // Format the date
@@ -35,9 +34,14 @@ const JournalEntry = ({ journalEntry }) => {
         <Separator className="mb-3 bg-zinc-600" />
         <div className="flex items-center justify-between">
           <span className="text-xs md:text-sm font-medium text-gray-400">
-            {truncateContent(journalEntry.mood || "No mood set")}
+            {journalEntry.moodData?.mood || "No mood analyzed yet"}
           </span>
-          <div className="w-3 h-3 bg-indigo-500 rounded-full"></div>
+          <div
+            className="w-3 h-3 rounded-full"
+            style={{
+              backgroundColor: journalEntry.moodData?.color || "#6366f1",
+            }}
+          ></div>
         </div>
       </div>
     </div>

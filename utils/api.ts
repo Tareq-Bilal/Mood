@@ -4,12 +4,13 @@ const createURL = (path: string) => {
   return window.location.origin + path;
 };
 
-export const createNewEntry = async () => {
+export const createNewEntry = async (content?: string) => {
   const response = await fetch(new Request(createURL("/api/journal")), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
+    body: content ? JSON.stringify({ content }) : undefined,
   });
 
   if (!response.ok) {

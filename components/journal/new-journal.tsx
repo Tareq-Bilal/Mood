@@ -1,12 +1,12 @@
 "use client";
-import { createNewEntry } from "@/utils/api";
 import { useRouter } from "next/navigation";
+
 const NewJournal = () => {
   const router = useRouter();
 
-  const handleOnCLick = async () => {
-    const entry = await createNewEntry();
-    router.push(`/journal/${entry.id}`);
+  const handleOnCLick = () => {
+    // Navigate to new entry page instead of creating immediately
+    router.push("/journal/new");
   };
 
   return (
