@@ -16,9 +16,6 @@ const getUserEntries = async () => {
     .from(JournalEntries)
     .where(eq(JournalEntries.userId, user.id));
 
-  // const promptResponse = await Analyze("tell me about next js");
-  // console.log("AI Analysis Response:", promptResponse);
-
   return entries;
 };
 

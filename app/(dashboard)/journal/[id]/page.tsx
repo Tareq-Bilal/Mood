@@ -1,7 +1,7 @@
 import React from "react";
 import Editor from "@/components/Editor";
 import { db } from "@/utils/db";
-import { JournalEntries } from "@/db/schema";
+import { JournalEntries, JournalAnalysis } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { getUserByClerkId } from "@/utils/auth";
 
@@ -20,14 +20,30 @@ const getJournalEntryById = async (id: string) => {
   return entry;
 };
 
+const getJournalAnalysis = async (entryId: string) => {
+  const [analysis] = await db
+    .select()
+    .from(JournalAnalysis)
+    .where(eq(JournalAnalysis.entryId, entryId))
+    .limit(1);
+
+  return analysis;
+};
+
 const EditorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const entry = await getJournalEntryById(id);
+  const analysis = await getJournalAnalysis(id);
+
   const analysisData = [
-    { subject: "Subject", value: "" },
-    { subject: "Mood", value: "" },
-    { subject: "Summary", value: "" },
-    { subject: "Negative", value: false },
+    { subject: "Subject", value: analysis?.subject || "Not analyzed yet" },
+    { subject: "Mood", value: analysis?.mood || "Not analyzed yet" },
+    { subject: "Summary", value: analysis?.summary || "Not analyzed yet" },
+    { subject: "Negative", value: analysis?.negative ? "Yes" : "No" },
+    {
+      subject: "Sentiment Score",
+      value: analysis?.sentimentScore?.toString() || "N/A",
+    },
   ];
 
   if (!entry) {
@@ -42,22 +58,29 @@ const EditorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   return (
-    <div className="text-white w-full h-full grid grid-cols-4 gap-4">
+    <div className="text-white w-full h-screen grid grid-cols-4 gap-4">
       <div className="col-span-3">
         <Editor entry={entry} />
       </div>
-      <div className="border-l border-indigo-500">
-        <h1 className="bg-indigo-500 text-2xl py-4 flex justify-center">
+      <div className="border-l border-zinc-500 h-full">
+        <h1
+          className="text-2xl py-4 flex justify-center text-white font-semibold"
+          style={{
+            background: `linear-gradient(135deg, ${
+              analysis?.color || "#6366f1"
+            }, ${analysis?.color ? `${analysis.color}dd` : "#4f46e5"})`,
+          }}
+        >
           Analysis
         </h1>
         <ul>
           {analysisData.map((data, index) => (
             <li
               key={index}
-              className="p-4 border-b flex justify-between border-indigo-300"
+              className="p-4 border-b flex justify-between items-start border-zinc-300"
             >
-              <strong>{data.subject}:</strong>
-              <span>{data.value}</span>
+              <strong className="shrink-0 mr-2">{data.subject}:</strong>
+              <p className="grow text-left">{data.value}</p>
             </li>
           ))}
         </ul>

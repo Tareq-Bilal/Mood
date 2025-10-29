@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { updateJournalEntry } from "@/utils/api";
 import { Spinner } from "./ui/spinner";
-import { CircleCheck } from "lucide-react";
+import { CircleCheck, Brain } from "lucide-react";
 
 const Editor = ({ entry }) => {
   const [entryContent, setEntryContent] = useState(entry.content);
@@ -34,7 +34,7 @@ const Editor = ({ entry }) => {
       } finally {
         setIsSaving(false);
       }
-    }, 200); // 1 second debounce
+    }, 200); // 200ms debounce
 
     // Cleanup function
     return () => {
@@ -52,6 +52,8 @@ const Editor = ({ entry }) => {
           {isSaving && (
             <span className="flex items-center gap-2">
               <Spinner className="text-indigo-500" />
+              <Brain className="size-4 animate-pulse text-purple-400" />
+              <span>Saving & Analyzing...</span>
             </span>
           )}
           {!isSaving && lastSaved && (
