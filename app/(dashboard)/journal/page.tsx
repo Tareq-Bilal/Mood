@@ -1,6 +1,7 @@
 import { JournalEntries } from "@/db/schema";
 import { getUserByClerkId } from "@/utils/auth";
 import { db } from "@/utils/db";
+import Analyze from "@/utils/ai";
 import { eq } from "drizzle-orm/sql/expressions/conditions";
 import JournalEntry from "@/components/journal/journal-entry";
 import NewJournal from "@/components/journal/new-journal";
@@ -14,6 +15,9 @@ const getUserEntries = async () => {
     .select()
     .from(JournalEntries)
     .where(eq(JournalEntries.userId, user.id));
+
+  // const promptResponse = await Analyze("tell me about next js");
+  // console.log("AI Analysis Response:", promptResponse);
 
   return entries;
 };
