@@ -59,7 +59,7 @@ const JournalPage = async () => {
 
       {/* Grid Container - Centered */}
       <div className="w-full max-w-7xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 mb-4 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 mb-4 lg:grid-cols-3 xl:grid-cols-3 gap-6">
           {/* New Entry Card */}
           <Link href="/journal/new">
             <NewJournal />

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { createNewEntry, updateJournalEntry } from "@/utils/api";
 import { Spinner } from "./ui/spinner";
 import { CircleCheck, Brain } from "lucide-react";
@@ -54,7 +54,6 @@ const SaveStatus = ({
 };
 
 const Editor = ({ entry = null }: EditorProps) => {
-  const router = useRouter();
   const params = useParams();
   const [entryContent, setEntryContent] = useState(entry?.content || "");
   const [isSaving, setIsSaving] = useState(false);
@@ -104,11 +103,12 @@ const Editor = ({ entry = null }: EditorProps) => {
       setEntryId(newEntry.id);
       setHasCreated(true);
       setLastSaved(new Date());
-      router.replace(`/journal/${newEntry.id}`);
+      // Use shallow navigation to update URL without re-mounting the component
+      window.history.replaceState(null, "", `/journal/${newEntry.id}`);
     } finally {
       isCreatingRef.current = false;
     }
-  }, [entryContent, router]);
+  }, [entryContent]);
 
   const updateEntry = useCallback(async () => {
     const idToUpdate = entryId || (params.id as string);
