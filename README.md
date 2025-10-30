@@ -159,11 +159,12 @@ Clean, distraction-free writing experience:
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ---
-
+<h1>Landing Page</h1>
 <img width="1905" height="865" alt="Screenshot from 2025-10-29 18-53-53" src="https://github.com/user-attachments/assets/7f2eb129-6645-4877-9355-a7eba4de5883" />
 <br>
 <br>
-<img width="1905" height="865" alt="Screenshot from 2025-10-30 12-28-09" src="https://github.com/user-attachments/assets/70765511-24a9-4e8f-924d-155883367acc" />
+<h1>Journal Listing</h1>
+<img width="1905" height="860" alt="Screenshot from 2025-10-30 18-36-37" src="https://github.com/user-attachments/assets/2b24c872-4a52-4371-a24d-dc807411ac8e" />
 <br>
 <br>
 <h1>Realtime Journal Analyzing</h1>
