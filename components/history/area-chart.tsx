@@ -50,6 +50,48 @@ interface SentimentDataProps {
   };
 }
 
+// Custom dot component that uses the color from each data point
+const CustomDot = (props: any) => {
+  const { cx, cy, payload } = props;
+
+  if (!payload) return null;
+
+  return (
+    <circle
+      cx={cx}
+      cy={cy}
+      r={5}
+      fill={payload.color}
+      stroke="#fff"
+      strokeWidth={2}
+      className="cursor-pointer hover:r-6 transition-all"
+    />
+  );
+};
+
+// Custom active dot (when hovering)
+const CustomActiveDot = (props: any) => {
+  const { cx, cy, payload } = props;
+
+  if (!payload) return null;
+
+  return (
+    <g>
+      {/* Outer glow circle */}
+      <circle cx={cx} cy={cy} r={10} fill={payload.color} opacity={0.2} />
+      {/* Main dot */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={6}
+        fill={payload.color}
+        stroke="#fff"
+        strokeWidth={3}
+      />
+    </g>
+  );
+};
+
 export function ChartAreaDefault({ SentimentData }: SentimentDataProps) {
   const { chartData, average, stats, dateRange } = SentimentData;
 
@@ -130,9 +172,15 @@ export function ChartAreaDefault({ SentimentData }: SentimentDataProps) {
                         <div className="flex flex-col gap-1">
                           <span className="font-semibold">{value}</span>
                           {data?.mood && (
-                            <span className="text-sm text-muted-foreground">
-                              Mood: {data.mood}
-                            </span>
+                            <div className="flex items-center gap-2">
+                              <div
+                                className="w-3 h-3 rounded-full"
+                                style={{ backgroundColor: data.color }}
+                              />
+                              <span className="text-sm text-muted-foreground">
+                                Mood: {data.mood}
+                              </span>
+                            </div>
                           )}
                         </div>
                       );
@@ -147,6 +195,8 @@ export function ChartAreaDefault({ SentimentData }: SentimentDataProps) {
                 fillOpacity={1}
                 stroke="#6366f1"
                 strokeWidth={2}
+                dot={<CustomDot />}
+                activeDot={<CustomActiveDot />}
               />
             </AreaChart>
           </ChartContainer>
@@ -186,19 +236,6 @@ export function ChartAreaDefault({ SentimentData }: SentimentDataProps) {
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
               Period: {dateRange.start} - {dateRange.end}
-            </div>
-          </div>
-          <div className="grid gap-1 text-right">
-            <div className="text-xs text-muted-foreground">Statistics</div>
-            <div className="text-sm">
-              High:{" "}
-              <span className="font-bold text-green-500">
-                {stats.highest ?? "N/A"}
-              </span>{" "}
-              | Low:{" "}
-              <span className="font-bold text-red-500">
-                {stats.lowest ?? "N/A"}
-              </span>
             </div>
           </div>
         </div>

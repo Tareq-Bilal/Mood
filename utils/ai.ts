@@ -126,3 +126,64 @@ const Analyze = async (entryContent: string): Promise<PromptSchemaType> => {
 };
 
 export default Analyze;
+
+/**
+ * Answers questions about user's journal entries using AI
+ * @param question - The user's question
+ * @param journalEntries - Array of journal entries to reference
+ * @returns The AI's answer as a string
+ */
+export const answerQuestion = async (
+  question: string,
+  journalEntries: string[]
+): Promise<string> => {
+  try {
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error("GEMINI_API_KEY is not defined");
+    }
+
+    const ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+    });
+
+    const promptTemplate = journalPrompts.questionPrompt;
+
+    // Build the context from journal entries
+    const journalContext = journalEntries
+      .map((entry, index) => `Entry ${index + 1}:\n${entry}`)
+      .join("\n\n");
+
+    const fullPrompt = `${promptTemplate.role}
+
+${promptTemplate.task}
+
+${promptTemplate.format}
+
+Journal Entries:
+${journalContext}
+
+Question: ${question}
+
+Answer:`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash-exp",
+      contents: fullPrompt,
+    });
+
+    const answer = response.text?.trim();
+
+    if (!answer) {
+      throw new Error("No answer received from AI");
+    }
+
+    return answer;
+  } catch (error) {
+    console.error("Question answering failed:", error);
+    throw new Error(
+      `Failed to answer question: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
+  }
+};

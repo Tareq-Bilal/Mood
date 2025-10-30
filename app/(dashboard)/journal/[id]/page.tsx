@@ -1,5 +1,5 @@
 import React from "react";
-import Editor from "@/components/Editor";
+import Editor from "@/components/editor";
 import { db } from "@/utils/db";
 import { JournalEntries, JournalAnalysis } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
