@@ -3,6 +3,7 @@ import { db } from "@/utils/db";
 import { JournalEntries, JournalAnalysis } from "@/db/schema";
 import { NextResponse } from "next/server";
 import Analyze from "@/utils/ai";
+import { saveSentimentScore } from "@/utils/sentiment";
 
 export const POST = async (request: Request) => {
   try {
@@ -41,6 +42,8 @@ export const POST = async (request: Request) => {
 
     // Analyze and save analysis if content is not empty
     let analysis = null;
+    let sentimentScore = null;
+
     if (content.trim().length > 0) {
       try {
         console.log("Analyzing new entry...");
@@ -61,6 +64,13 @@ export const POST = async (request: Request) => {
           .returning();
 
         console.log("Analysis saved successfully for new entry:", analysis);
+
+        // Save sentiment score using helper function
+        sentimentScore = await saveSentimentScore(entry.id, entry.updatedAt, {
+          mood: analysisResult.mood,
+          color: analysisResult.color,
+          sentimentScore: analysisResult.sentimentScore,
+        });
       } catch (error) {
         console.error("Failed to analyze new entry:", error);
         // Don't fail the whole request if analysis fails
@@ -70,6 +80,7 @@ export const POST = async (request: Request) => {
     return NextResponse.json({
       entry: entry,
       analysis: analysis,
+      sentimentScore: sentimentScore,
     });
   } catch (error) {
     console.error("Error creating journal entry:", error);

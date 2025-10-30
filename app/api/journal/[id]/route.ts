@@ -4,6 +4,11 @@ import { JournalEntries, JournalAnalysis } from "@/db/schema";
 import { getUserByClerkId } from "@/utils/auth";
 import { and, eq } from "drizzle-orm";
 import Analyze from "@/utils/ai";
+import {
+  saveSentimentScore,
+  updateSentimentScore,
+  getSentimentScore,
+} from "@/utils/sentiment";
 
 export const PATCH = async (
   req: Request,
@@ -69,6 +74,8 @@ export const PATCH = async (
 
     // Only run analysis if content changed
     let analysis = null;
+    let sentimentScore = null;
+
     if (contentChanged && content.trim().length > 0) {
       try {
         console.log("Content changed, analyzing entry...");
@@ -114,7 +121,34 @@ export const PATCH = async (
           analysis = newAnalysis;
         }
 
-        console.log("Analysis saved successfully!");
+        console.log("Analysis saved/updated successfully!");
+
+        // Update or create sentiment score using helper functions
+        const existingSentimentScore = await getSentimentScore(id);
+
+        if (existingSentimentScore) {
+          // Update existing sentiment score
+          sentimentScore = await updateSentimentScore(
+            id,
+            updatedEntry[0].updatedAt,
+            {
+              mood: analysisResult.mood,
+              color: analysisResult.color,
+              sentimentScore: analysisResult.sentimentScore,
+            }
+          );
+        } else {
+          // Create new sentiment score (safety net if it wasn't created during POST)
+          sentimentScore = await saveSentimentScore(
+            id,
+            updatedEntry[0].updatedAt,
+            {
+              mood: analysisResult.mood,
+              color: analysisResult.color,
+              sentimentScore: analysisResult.sentimentScore,
+            }
+          );
+        }
       } catch (error) {
         console.error("Failed to analyze entry:", error);
         // Don't fail the request if analysis fails
@@ -124,6 +158,7 @@ export const PATCH = async (
     return NextResponse.json({
       updatedEntry: updatedEntry[0],
       analysis,
+      sentimentScore,
     });
   } catch (error) {
     console.error("Error updating journal entry:", error);
