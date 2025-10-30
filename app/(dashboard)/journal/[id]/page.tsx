@@ -4,7 +4,7 @@ import { db } from "@/utils/db";
 import { JournalEntries, JournalAnalysis } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { getUserByClerkId } from "@/utils/auth";
-
+import DeleteJournalBtn from "@/components/journal/delete-journal-btn";
 const getJournalEntryById = async (id: string) => {
   const user = await getUserByClerkId();
 
@@ -38,7 +38,10 @@ const EditorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const analysisData = [
     { subject: "Subject", value: analysis?.subject || "Not analyzed yet" },
     { subject: "Mood", value: analysis?.mood || "Not analyzed yet" },
-    { subject: "Summary", value: analysis?.summary || "Not analyzed yet" },
+    {
+      subject: "Summary",
+      value: `${analysis?.summary}` || "Not analyzed yet",
+    },
     { subject: "Negative", value: analysis?.negative ? "Yes" : "No" },
     {
       subject: "Sentiment Score",
@@ -84,6 +87,7 @@ const EditorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             </li>
           ))}
         </ul>
+        <DeleteJournalBtn journalId={entry.id} />
       </div>
     </div>
   );

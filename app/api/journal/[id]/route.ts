@@ -133,3 +133,62 @@ export const PATCH = async (
     );
   }
 };
+
+export const DELETE = async (
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) => {
+  const user = await getUserByClerkId();
+
+  if (!user) {
+    return NextResponse.json(
+      { error: "User not authenticated." },
+      { status: 401 }
+    );
+  }
+
+  try {
+    const { id } = await params; // Await params for Next.js 15
+
+    // Check if the entry exists and belongs to the user
+    const [existingEntry] = await db
+      .select()
+      .from(JournalEntries)
+      .where(and(eq(JournalEntries.id, id), eq(JournalEntries.userId, user.id)))
+      .limit(1);
+
+    if (!existingEntry) {
+      return NextResponse.json(
+        { error: "Journal entry not found or unauthorized." },
+        { status: 404 }
+      );
+    }
+
+    // Delete the journal entry (analysis will be cascade deleted)
+    const deletedEntry = await db
+      .delete(JournalEntries)
+      .where(and(eq(JournalEntries.id, id), eq(JournalEntries.userId, user.id)))
+      .returning();
+
+    if (deletedEntry.length === 0) {
+      return NextResponse.json(
+        { error: "Failed to delete journal entry." },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        message: "Journal entry deleted successfully.",
+        deletedEntry: deletedEntry[0],
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting journal entry:", error);
+    return NextResponse.json(
+      { error: "Failed to delete journal entry." },
+      { status: 500 }
+    );
+  }
+};

@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
           <Link href="/journal">
             <li className="hover:text-indigo-500 cursor-pointer">Journals</li>
           </Link>
-          <li className="hover:text-indigo-500 cursor-pointer">Settings</li>
+          <li className="hover:text-indigo-500 cursor-pointer">History</li>
         </ul>
       </div>
       <div className="ml-34 h-full w-full overflow-auto">{children}</div>

@@ -37,3 +37,15 @@ export const updateJournalEntry = async (id: string, content: string) => {
   const updatedEntry = await response.json();
   return updatedEntry.updatedEntry;
 };
+
+export const deleteJournalEntry = async (id: string) => {
+  const response = await fetch(new Request(createURL(`/api/journal/${id}`)), {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete journal entry");
+  }
+
+  return true;
+};

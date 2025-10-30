@@ -9,6 +9,7 @@ import {
 } from "@clerk/nextjs";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const Inter = Geist({
   subsets: ["latin"],
@@ -44,6 +45,7 @@ export default function RootLayout({
             </SignedIn>
           </header>
           {children}
+          <Toaster position="top-center" />
         </body>
       </html>
     </ClerkProvider>

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between pt-[20vh]">
+    <main className="flex min-h-screen flex-col align-middle items-center justify-between pt-[20vh]">
       <div className="gap-6 flex flex-col justify-center items-center">
         <h1 className="text-5xl text-center font-bold">
           The Best Journal App Ever, Period.
