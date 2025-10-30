@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { createNewEntry, updateJournalEntry } from "@/utils/api";
 import { Spinner } from "./ui/spinner";
 import { CircleCheck, Brain } from "lucide-react";
@@ -55,6 +55,7 @@ const SaveStatus = ({
 
 const Editor = ({ entry = null }: EditorProps) => {
   const params = useParams();
+  const router = useRouter();
   const [entryContent, setEntryContent] = useState(entry?.content || "");
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
@@ -99,16 +100,29 @@ const Editor = ({ entry = null }: EditorProps) => {
 
     isCreatingRef.current = true;
     try {
-      const newEntry = await createNewEntry(entryContent);
+      const { entry: newEntry, analysis } = await createNewEntry(entryContent);
       setEntryId(newEntry.id);
       setHasCreated(true);
       setLastSaved(new Date());
+
+      // Log the analysis result for first-time creation
+      if (analysis) {
+        console.log("✅ Journal analyzed on creation:", analysis);
+        console.log("📊 Mood:", analysis.mood);
+        console.log("🎨 Color:", analysis.color);
+        console.log("📝 Summary:", analysis.summary);
+        console.log("💯 Sentiment Score:", analysis.sentimentScore);
+      }
+
       // Use shallow navigation to update URL without re-mounting the component
       window.history.replaceState(null, "", `/journal/${newEntry.id}`);
+
+      // Refresh the page to show the analysis in the side panel
+      router.refresh();
     } finally {
       isCreatingRef.current = false;
     }
-  }, [entryContent]);
+  }, [entryContent, router]);
 
   const updateEntry = useCallback(async () => {
     const idToUpdate = entryId || (params.id as string);

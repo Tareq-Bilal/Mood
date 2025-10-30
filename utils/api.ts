@@ -17,8 +17,11 @@ export const createNewEntry = async (content?: string) => {
     throw new Error("Failed to create journal entry");
   }
 
-  const entry = await response.json();
-  return entry.entry;
+  const data = await response.json();
+  return {
+    entry: data.entry,
+    analysis: data.analysis,
+  };
 };
 
 export const updateJournalEntry = async (id: string, content: string) => {
