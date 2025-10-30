@@ -160,6 +160,15 @@ Clean, distraction-free writing experience:
 
 ---
 
+<img width="1905" height="865" alt="Screenshot from 2025-10-29 18-53-53" src="https://github.com/user-attachments/assets/7f2eb129-6645-4877-9355-a7eba4de5883" />
+<br>
+<img width="1905" height="865" alt="Screenshot from 2025-10-30 12-28-09" src="https://github.com/user-attachments/assets/70765511-24a9-4e8f-924d-155883367acc" />
+<br>
+<img width="1905" height="865" alt="Screenshot from 2025-10-29 18-54-59" src="https://github.com/user-attachments/assets/dd0f5095-59af-4ac1-a4f3-64b99f03bef4" />
+<br>
+<h1>Auto Saving Feature</h1>
+<img width="526" height="97" alt="Screenshot from 2025-10-29 18-53-10" src="https://github.com/user-attachments/assets/d82edfba-3414-4100-9adb-6697222a6786" />
+
 ## 🏗️ Architecture
 
 ### **Application Flow**
