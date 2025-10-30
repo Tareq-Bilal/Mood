@@ -162,12 +162,27 @@ Clean, distraction-free writing experience:
 
 <img width="1905" height="865" alt="Screenshot from 2025-10-29 18-53-53" src="https://github.com/user-attachments/assets/7f2eb129-6645-4877-9355-a7eba4de5883" />
 <br>
+<br>
 <img width="1905" height="865" alt="Screenshot from 2025-10-30 12-28-09" src="https://github.com/user-attachments/assets/70765511-24a9-4e8f-924d-155883367acc" />
 <br>
+<br>
+<h1>Realtime Journal Analyzing</h1>
 <img width="1905" height="865" alt="Screenshot from 2025-10-29 18-54-59" src="https://github.com/user-attachments/assets/dd0f5095-59af-4ac1-a4f3-64b99f03bef4" />
+<br>
 <br>
 <h1>Auto Saving Feature</h1>
 <img width="526" height="97" alt="Screenshot from 2025-10-29 18-53-10" src="https://github.com/user-attachments/assets/d82edfba-3414-4100-9adb-6697222a6786" />
+<br>
+<br>
+<h1>Ask About Your Journals</h1>
+<img width="1573" height="602" alt="Screenshot from 2025-10-30 17-45-23" src="https://github.com/user-attachments/assets/a6303cad-a993-4314-92f6-1c371c0a5b37" />
+<br>
+<br>
+<h1>Journals Chart Aanalysis</h1>
+<img width="1910" height="861" alt="Screenshot from 2025-10-30 16-49-10" src="https://github.com/user-attachments/assets/66aa5f11-7baf-4626-ab4a-3b0553d8f6e4" />
+<br>
+
+---
 
 ## 🏗️ Architecture
 
