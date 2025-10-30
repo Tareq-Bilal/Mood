@@ -43,7 +43,7 @@ const HistoryPage = async () => {
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8 max-w-7xl">
+    <div className="container mx-auto py-8">
       <ChartAreaDefault SentimentData={SentimentData} />
     </div>
   );
