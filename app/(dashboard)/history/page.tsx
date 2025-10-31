@@ -11,7 +11,7 @@ const HistoryPage = async () => {
   const user = await getUserByClerkId();
 
   // Fetch sentiment data
-  const allScores = await getAllSentimentScores(30); // Last 30 days
+  const allScores = await getAllSentimentScores(user?.id || "", 30); // Last 30 days for current user
   const avgScore = await getAvgSentimentScores(user?.id || "", 30);
   const stats = await getSentimentStats(user?.id || "");
 

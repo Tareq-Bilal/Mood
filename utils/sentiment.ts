@@ -1,5 +1,5 @@
 import { db } from "@/utils/db";
-import { SentimentScores } from "@/db/schema";
+import { SentimentScores, JournalEntries } from "@/db/schema";
 import { eq, avg, and, gte } from "drizzle-orm";
 
 /**
@@ -112,12 +112,16 @@ export const getSentimentScores = async (entryId: string) => {
 };
 
 /**
- * Gets all sentiment scores for all journal entries (for charts/history)
+ * Gets all sentiment scores for a user's journal entries (for charts/history)
+ * @param userId - User ID to filter scores
  * @param daysBack - Optional: Get scores for last N days
  */
-export const getAllSentimentScores = async (daysBack?: number) => {
+export const getAllSentimentScores = async (
+  userId: string,
+  daysBack?: number
+) => {
   try {
-    const conditions = [];
+    const conditions = [eq(JournalEntries.userId, userId)];
 
     if (daysBack) {
       const dateThreshold = new Date();
@@ -126,9 +130,22 @@ export const getAllSentimentScores = async (daysBack?: number) => {
     }
 
     const scores = await db
-      .select()
+      .select({
+        id: SentimentScores.id,
+        createdAt: SentimentScores.createdAt,
+        updatedAt: SentimentScores.updatedAt,
+        journalEntryId: SentimentScores.journalEntryId,
+        journalUpdatedAt: SentimentScores.journalUpdatedAt,
+        mood: SentimentScores.mood,
+        color: SentimentScores.color,
+        score: SentimentScores.score,
+      })
       .from(SentimentScores)
-      .where(conditions.length > 0 ? and(...conditions) : undefined)
+      .innerJoin(
+        JournalEntries,
+        eq(SentimentScores.journalEntryId, JournalEntries.id)
+      )
+      .where(and(...conditions))
       .orderBy(SentimentScores.createdAt);
 
     return scores;
