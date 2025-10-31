@@ -1,7 +1,7 @@
 import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { truncateContent } from "@/lib/utils";
-const JournalEntry = ({ journalEntry }) => {
+const JournalEntry = ({ journalEntry }: { journalEntry: any }) => {
   // Format the date
   const date = new Date(journalEntry.createdAt);
   const formattedDate = date.toLocaleDateString("en-US", {
