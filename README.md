@@ -15,6 +15,16 @@
 
 ---
 
+## 🌐 Live Application
+
+Experience Mood in action:
+
+**[https://mood-five-sigma.vercel.app/](https://mood-five-sigma.vercel.app/)**
+
+> Click the link above to start journaling with AI-powered mood analysis!
+
+---
+
 ## ✨ Features
 
 ### 🔄 **Real-Time Auto-Saving**
@@ -159,6 +169,7 @@ Clean, distraction-free writing experience:
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ---
+
 <h1>Landing Page</h1>
 <img width="1905" height="865" alt="Screenshot from 2025-10-29 18-53-53" src="https://github.com/user-attachments/assets/7f2eb129-6645-4877-9355-a7eba4de5883" />
 <br>
