@@ -10,7 +10,7 @@ const JournalEntry = ({ journalEntry }: { journalEntry: any }) => {
     year: "numeric",
   });
 
-  // Truncate content
+  // Truncate content to preview
 
   return (
     <div className="w-full h-full min-h-64 bg-zinc-800 rounded-sm p-6 flex flex-col justify-between cursor-pointer hover:bg-zinc-700 hover:shadow-lg transition-all duration-200 border border-zinc-700 hover:border-indigo-600">
