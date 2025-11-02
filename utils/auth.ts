@@ -15,7 +15,7 @@ export const getUserByClerkId = async () => {
   )[0];
 
   if (!user) {
-    throw new Error("User not found.");
+    throw new Error("User not found. Please complete sign-up.");
   }
 
   return user;
