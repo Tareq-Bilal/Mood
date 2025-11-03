@@ -1,6 +1,3 @@
-"use client";
-
-import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { cn, truncateContent } from "@/lib/utils";
 import {

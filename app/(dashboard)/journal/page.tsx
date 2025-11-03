@@ -5,8 +5,10 @@ import { desc } from "drizzle-orm";
 import { eq } from "drizzle-orm/sql/expressions/conditions";
 import JournalEntry from "@/components/journal/journal-entry";
 import NewJournal from "@/components/journal/new-journal";
+import Streak from "@/components/journal/streak";
 import Link from "next/link";
 import Question from "@/components/question";
+import { computeStreak } from "@/lib/utils";
 
 const getUserEntries = async () => {
   const user = await getUserByClerkId();
@@ -75,13 +77,21 @@ const JournalPage = async () => {
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center sm:px-2 md:px-5 lg:px-15 xl:px-47">
       {/* Header */}
-      <div className="mt-4 mb-12 text-center">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">
-          Journal
-        </h1>
-        <p className="text-gray-400 text-sm md:text-base">
-          {entries.length} entries
-        </p>
+      <div className="flex my-4">
+        <div className="mt-4 ml-70 text-center">
+          <div className="flex items-center justify-center space-x-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">
+              Journal
+            </h1>
+          </div>
+          <p className="text-gray-400 text-sm md:text-base">
+            {entries.length} entries
+          </p>
+        </div>
+        <div className="ml-50 items-center">
+          <Streak streak={computeStreak(entries)} max={7} />
+          <span className="ml-4">Streak</span>
+        </div>
       </div>
 
       {/* Grid Container - Centered */}
