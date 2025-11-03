@@ -1,5 +1,6 @@
 import React from "react";
 import Editor from "@/components/editor";
+import { PRIMARY_COLOR } from "@/utils/constants";
 
 const NewJournalPage = () => {
   return (
@@ -10,7 +11,7 @@ const NewJournalPage = () => {
       <div className="border-l border-indigo-500 h-full">
         <h1
           className="text-2xl py-4 flex justify-center text-white font-semibold"
-          style={{ backgroundColor: "#6366f1" }}
+          style={{ backgroundColor: PRIMARY_COLOR }}
         >
           Analysis
         </h1>

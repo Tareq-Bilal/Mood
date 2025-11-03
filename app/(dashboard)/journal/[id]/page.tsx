@@ -5,6 +5,7 @@ import { JournalEntries, JournalAnalysis } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { getUserByClerkId } from "@/utils/auth";
 import DeleteJournalBtn from "@/components/journal/delete-journal-btn";
+import { PRIMARY_COLOR, PRIMARY_COLOR_DARK } from "@/utils/constants";
 const getJournalEntryById = async (id: string) => {
   const user = await getUserByClerkId();
 
@@ -73,8 +74,10 @@ const EditorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           className="text-2xl py-4 flex justify-center text-white font-semibold"
           style={{
             background: `linear-gradient(135deg, ${
-              analysis?.color || "#6366f1"
-            }, ${analysis?.color ? `${analysis.color}dd` : "#4f46e5"})`,
+              analysis?.color || PRIMARY_COLOR
+            }, ${
+              analysis?.color ? `${analysis.color}dd` : PRIMARY_COLOR_DARK
+            })`,
           }}
         >
           Analysis

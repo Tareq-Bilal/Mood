@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { createNewEntry, updateJournalEntry } from "@/utils/api";
 import { Spinner } from "./ui/spinner";
 import { CircleCheck, Brain } from "lucide-react";
+import { HIGHLIGHT_COLOR } from "@/utils/constants";
 
 interface EditorProps {
   entry?: {
@@ -35,7 +36,7 @@ const SaveStatus = ({
 
   if (lastSaved) {
     return (
-      <span className="text-[#A8EB12]">
+      <span style={{ color: HIGHLIGHT_COLOR }}>
         <CircleCheck className="inline-block size-4 mb-0.5" /> Saved at{" "}
         {lastSaved.toLocaleTimeString()}
       </span>

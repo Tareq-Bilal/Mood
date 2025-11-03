@@ -49,3 +49,34 @@ export const deleteJournalEntry = async (id: string) => {
 
   return true;
 };
+
+export const bookmarkJournalEntry = async (journalEntryId: string) => {
+  const response = await fetch(
+    new Request(createURL(`/api/journal/${journalEntryId}/bookmark`)),
+    {
+      method: "POST",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to bookmark journal entry");
+  }
+
+  const result = await response.json();
+  return result.bookmark;
+};
+
+export const removeBookmark = async (journalEntryId: string) => {
+  const response = await fetch(
+    new Request(createURL(`/api/journal/${journalEntryId}/bookmark`)),
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to remove bookmark");
+  }
+
+  return true;
+};

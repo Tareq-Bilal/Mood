@@ -70,3 +70,16 @@ export const SentimentScores = pgTable("sentiment_scores", {
   // The sentiment score
   score: integer("score").notNull(),
 });
+
+export const Bookmarks = pgTable("bookmarks", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  journalEntryId: uuid("journal_entry_id")
+    .notNull()
+    .references(() => JournalEntries.id, { onDelete: "cascade" }),
+});

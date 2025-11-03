@@ -17,13 +17,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { PRIMARY_COLOR } from "@/utils/constants";
 
 export const description = "Sentiment score tracking over time";
 
 const chartConfig = {
   score: {
     label: "Sentiment Score",
-    color: "#6366f1", // Indigo-500
+    color: PRIMARY_COLOR,
   },
 } satisfies ChartConfig;
 
@@ -142,8 +143,16 @@ export function ChartAreaDefault({ SentimentData }: SentimentDataProps) {
             >
               <defs>
                 <linearGradient id="colorScore" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#6366f1" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#6366f1" stopOpacity={0.1} />
+                  <stop
+                    offset="5%"
+                    stopColor={PRIMARY_COLOR}
+                    stopOpacity={0.8}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor={PRIMARY_COLOR}
+                    stopOpacity={0.1}
+                  />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
@@ -162,7 +171,7 @@ export function ChartAreaDefault({ SentimentData }: SentimentDataProps) {
                 domain={[-10, 10]}
               />
               <ChartTooltip
-                cursor={{ stroke: "#6366f1", strokeWidth: 2 }}
+                cursor={{ stroke: PRIMARY_COLOR, strokeWidth: 2 }}
                 content={
                   <ChartTooltipContent
                     indicator="dot"
@@ -193,7 +202,7 @@ export function ChartAreaDefault({ SentimentData }: SentimentDataProps) {
                 type="monotone"
                 fill="url(#colorScore)"
                 fillOpacity={1}
-                stroke="#6366f1"
+                stroke={PRIMARY_COLOR}
                 strokeWidth={2}
                 dot={<CustomDot />}
                 activeDot={<CustomActiveDot />}

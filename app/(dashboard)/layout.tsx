@@ -29,6 +29,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               History
             </li>
           </Link>
+          <Link href="/bookmarks">
+            <li className="hover:text-indigo-500 cursor-pointer text-base">
+              Bookmarks
+            </li>
+          </Link>
         </ul>
       </div>
 

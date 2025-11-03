@@ -1,6 +1,7 @@
-import { JournalEntries, JournalAnalysis } from "@/db/schema";
+import { JournalEntries, JournalAnalysis, Bookmarks } from "@/db/schema";
 import { getUserByClerkId } from "@/utils/auth";
 import { db } from "@/utils/db";
+import { desc } from "drizzle-orm";
 import { eq } from "drizzle-orm/sql/expressions/conditions";
 import JournalEntry from "@/components/journal/journal-entry";
 import NewJournal from "@/components/journal/new-journal";
@@ -14,7 +15,8 @@ const getUserEntries = async () => {
   const entries = await db
     .select()
     .from(JournalEntries)
-    .where(eq(JournalEntries.userId, user.id));
+    .where(eq(JournalEntries.userId, user.id))
+    .orderBy(desc(JournalEntries.updatedAt));
 
   return entries;
 };
@@ -32,10 +34,28 @@ const getJournalMood = async (entryId: string) => {
   return analysis || null;
 };
 
+const getUserBookmarks = async (userId: string) => {
+  const bookmarks = await db
+    .select({
+      journalEntryId: Bookmarks.journalEntryId,
+    })
+    .from(Bookmarks)
+    .where(eq(Bookmarks.userId, userId));
+
+  return new Set(bookmarks.map((b) => b.journalEntryId));
+};
+
 const JournalPage = async () => {
+  const user = await getUserByClerkId();
   const entries = await getUserEntries();
 
-  // Fetch mood data for all entries
+  if (!user) {
+    return <div>Please sign in to view your journal.</div>;
+  }
+
+  // Fetch bookmarks and mood data for all entries
+  const bookmarkedIds = await getUserBookmarks(user.id);
+
   const entriesWithMoods = await Promise.all(
     entries.map(async (entry) => {
       const moodData = await getJournalMood(entry.id);
@@ -45,6 +65,12 @@ const JournalPage = async () => {
       };
     })
   );
+
+  const decoratedEntries = entriesWithMoods.map((entry, index) => ({
+    ...entry,
+    isRecent: index === 0,
+    isBookmarked: bookmarkedIds.has(entry.id),
+  }));
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center sm:px-2 md:px-5 lg:px-15 xl:px-47">
@@ -71,7 +97,7 @@ const JournalPage = async () => {
           </Link>
 
           {/* Journal Entries */}
-          {entriesWithMoods.map((entry) => (
+          {decoratedEntries.map((entry) => (
             <Link key={entry.id} href={`/journal/${entry.id}`}>
               <JournalEntry journalEntry={entry} />
             </Link>
