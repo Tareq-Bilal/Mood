@@ -66,7 +66,7 @@ const EditorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <Editor entry={entry} />
       </div>
       <div
-        className="w-full h-full
+        className="w-full h-screen
        lg:border-l lg:border-t-0 border-t border-zinc-500"
       >
         <h1
