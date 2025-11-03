@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { cn, truncateContent } from "@/lib/utils";
-import { Bookmark } from "lucide-react";
-import { bookmarkJournalEntry, removeBookmark } from "@/utils/api";
 import {
   HIGHLIGHT_COLOR,
   HIGHLIGHT_COLOR_ALPHA,
   PRIMARY_COLOR,
 } from "@/utils/constants";
+import BookmarkButton from "./bookmark-button";
 
 interface JournalEntryMoodData {
   mood: string | null;
@@ -31,12 +30,6 @@ interface JournalEntryProps {
 }
 
 const JournalEntry = ({ journalEntry }: JournalEntryProps) => {
-  // Local state for bookmark - allows optimistic UI updates
-  const [isBookmarked, setIsBookmarked] = useState(
-    Boolean(journalEntry.isBookmarked)
-  );
-  const [isLoading, setIsLoading] = useState(false);
-
   // Format the date
   const date = new Date(journalEntry.createdAt);
   const formattedDate = date.toLocaleDateString("en-US", {
@@ -46,30 +39,6 @@ const JournalEntry = ({ journalEntry }: JournalEntryProps) => {
   });
 
   const isRecent = Boolean(journalEntry.isRecent);
-
-  const handleBookmarkToggle = async (e: React.MouseEvent) => {
-    e.preventDefault(); // Prevent navigation when clicking bookmark
-    e.stopPropagation();
-
-    // Optimistic update
-    const previousState = isBookmarked;
-    setIsBookmarked(!isBookmarked);
-    setIsLoading(true);
-
-    try {
-      if (previousState) {
-        await removeBookmark(journalEntry.id);
-      } else {
-        await bookmarkJournalEntry(journalEntry.id);
-      }
-    } catch (error) {
-      // Rollback on error
-      console.error("Failed to toggle bookmark:", error);
-      setIsBookmarked(previousState);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div
@@ -92,19 +61,11 @@ const JournalEntry = ({ journalEntry }: JournalEntryProps) => {
         <span className="text-sm font-semibold text-indigo-400">
           {formattedDate}
         </span>
-        <button
-          className={`transition-colors ${
-            isLoading ? "cursor-wait opacity-50" : "cursor-pointer"
-          } ${
-            isBookmarked
-              ? "text-yellow-400 fill-yellow-400"
-              : "text-gray-400 hover:text-yellow-400"
-          }`}
-          onClick={handleBookmarkToggle}
-          disabled={isLoading}
-        >
-          <Bookmark size={16} fill={isBookmarked ? "currentColor" : "none"} />
-        </button>
+        <BookmarkButton
+          journalEntryId={journalEntry.id}
+          initialBookmarked={Boolean(journalEntry.isBookmarked)}
+          size={16}
+        />
       </div>
 
       {/* Separator */}

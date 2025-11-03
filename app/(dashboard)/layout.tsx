@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, Notebook, History, Bookmark, X } from "lucide-react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -14,23 +14,26 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="bg-zinc-950 min-h-screen flex">
       {/* Desktop Sidebar - visible on lg and above */}
-      <div className="hidden lg:fixed lg:flex lg:left-0 lg:top-0 lg:h-screen lg:w-32 text-white bg-zinc-900 border-r flex-col items-start justify-start pl-4 shadow-md z-10">
+      <div className="hidden lg:fixed lg:flex lg:left-0 lg:top-0 lg:h-screen lg:w-36 text-white bg-zinc-900 border-r flex-col items-start justify-start pl-4 shadow-md z-10">
         <Link href="/">
           <h1 className="text-2xl font-bold mt-4">MOOD</h1>
         </Link>
         <ul className="mt-8 flex flex-col pl-0.5 gap-6">
           <Link href="/journal">
             <li className="hover:text-indigo-500 cursor-pointer text-base">
+              <Notebook className="inline mr-2 size-5 mb-1" />
               Journals
             </li>
           </Link>
           <Link href="/history">
             <li className="hover:text-indigo-500 cursor-pointer text-base">
+              <History className="inline mr-2 size-5 mb-1" />
               History
             </li>
           </Link>
           <Link href="/bookmarks">
             <li className="hover:text-indigo-500 cursor-pointer text-base">
+              <Bookmark className="inline mr-2 size-5 mb-1" />
               Bookmarks
             </li>
           </Link>
