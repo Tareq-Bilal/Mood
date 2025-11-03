@@ -65,7 +65,10 @@ const EditorPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <div className="lg:col-span-3">
         <Editor entry={entry} />
       </div>
-      <div className="w-full lg:border-l lg:border-t-0 border-t border-zinc-500">
+      <div
+        className="w-full h-full
+       lg:border-l lg:border-t-0 border-t border-zinc-500"
+      >
         <h1
           className="text-2xl py-4 flex justify-center text-white font-semibold"
           style={{
