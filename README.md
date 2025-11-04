@@ -187,7 +187,7 @@ Clean, distraction-free writing experience:
 <br>
 <br>
 <h1>Ask About Your Journals</h1>
-<img width="1573" height="602" alt="Screenshot from 2025-10-30 17-45-23" src="https://github.com/user-attachments/assets/a6303cad-a993-4314-92f6-1c371c0a5b37" />
+<img width="1421" height="387" alt="image" src="https://github.com/user-attachments/assets/8f39cc0d-ce5b-43c1-bb67-8f92351ad4c6" />
 <br>
 <br>
 <h1>Journals Chart Aanalysis</h1>
