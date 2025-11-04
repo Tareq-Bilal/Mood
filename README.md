@@ -191,9 +191,11 @@ Clean, distraction-free writing experience:
 <br>
 <br>
 <h1>Journals Chart Aanalysis</h1>
-<img width="1910" height="861" alt="Screenshot from 2025-10-30 16-49-10" src="https://github.com/user-attachments/assets/66aa5f11-7baf-4626-ab4a-3b0553d8f6e4" />
+<img width="1919" height="877" alt="image" src="https://github.com/user-attachments/assets/b1929f89-f08c-40a9-af89-94c4d0502957" />
 <br>
-
+<h1>Bookmarks Listing</h1>
+<img width="1919" height="877" alt="image" src="https://github.com/user-attachments/assets/0a9ab2f4-7658-4c55-affb-5b319944bfbf" />
+<br>
 ---
 
 ## 🏗️ Architecture
