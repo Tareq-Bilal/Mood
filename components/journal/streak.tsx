@@ -72,9 +72,7 @@ const Streak: React.FC<Props> = ({ streak, max = 7, size = 80 }) => {
             <Flame
               className={`${flameColor} w-7 h-7 transition-colors duration-300`}
             />
-            <span className="text-sm font-semibold text-gray-700 mt-0.5">
-              {streak}
-            </span>
+            <span className="text-sm font-semibold mt-0.5">{streak}</span>
           </div>
         </div>
       </div>

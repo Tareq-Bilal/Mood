@@ -88,7 +88,7 @@ const JournalPage = async () => {
         </div>
         <div className="flex flex-col items-center gap-2 md:absolute md:right-0">
           <Streak streak={computeStreak(entries)} max={7} />
-          <span className="text-sm text-gray-400">Streak</span>
+          <span className="text-sm">Streak</span>
         </div>
       </div>
 
