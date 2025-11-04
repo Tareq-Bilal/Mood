@@ -75,22 +75,20 @@ const JournalPage = async () => {
   }));
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center sm:px-2 md:px-5 lg:px-15 xl:px-47">
+    <div className="w-full min-h-screen flex flex-col items-center px-4 sm:px-6 md:px-8 lg:px-12">
       {/* Header */}
-      <div className="flex my-4">
-        <div className="mt-4 ml-70 text-center">
-          <div className="flex items-center justify-center space-x-4">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">
-              Journal
-            </h1>
-          </div>
+      <div className="w-full max-w-7xl flex flex-col sm:flex-row items-center justify-between md:justify-center gap-6 py-8 relative">
+        <div className="text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">
+            Journal
+          </h1>
           <p className="text-gray-400 text-sm md:text-base">
-            {entries.length} entries
+            {entries.length} {entries.length === 1 ? "entry" : "entries"}
           </p>
         </div>
-        <div className="ml-50 items-center">
+        <div className="flex flex-col items-center gap-2 md:absolute md:right-0">
           <Streak streak={computeStreak(entries)} max={7} />
-          <span className="ml-4">Streak</span>
+          <span className="text-sm text-gray-400">Streak</span>
         </div>
       </div>
 
